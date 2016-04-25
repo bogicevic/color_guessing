@@ -1,3 +1,4 @@
+// initial variable values
 var numSquares = 6;
 var colors = [];
 var pickedColor;
@@ -13,7 +14,13 @@ var modeButtons = document.querySelectorAll(".mode");
 init();
 
 function init() {
-  // mode buttons event listeners
+  setUpEventListeners();
+  setUpSquares();
+  reset();
+}
+
+function setUpEventListeners() {
+  // mode buttons, hard/easy
   for (var i = 0; i < modeButtons.length; i++) {
     modeButtons[i].addEventListener("click", function() {
       modeButtons[0].classList.remove("selected");
@@ -30,8 +37,13 @@ function init() {
       reset();
     });
   }
+  // reset button
+  resetButton.addEventListener("click", function(){
+    reset();
+  });
+}
 
-  // set up squares
+function setUpSquares() {
   for(var i = 0; i < squares.length; i++){
     // add click listeners to squares
     squares[i].addEventListener("click", function(){
@@ -51,8 +63,6 @@ function init() {
       }
     });
   }
-
-  reset();
 }
 
 function reset() {
@@ -74,10 +84,6 @@ function reset() {
   messageDisplay.textContent = "";
   resetButton.textContent = "New Colors";
 }
-
-resetButton.addEventListener("click", function(){
-  reset();
-});
 
 function changeColors(color){
   // loop through all squares
