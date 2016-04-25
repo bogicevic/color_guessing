@@ -1,33 +1,83 @@
-var colors = generateRandomColors(6);
+var numSquares = 6;
+var colors = [];
+var pickedColor;
+
+// selectors
 var squares = document.querySelectorAll(".square");
-var pickedColor = pickColor();
 var colorDisplay = document.getElementById("colorDisplay");
 var messageDisplay = document.querySelector("#message");
 var h1 = document.querySelector("h1");
+var resetButton = document.querySelector("#reset");
+var modeButtons = document.querySelectorAll(".mode");
 
-colorDisplay.textContent = pickedColor;
+init();
 
-for(var i = 0; i < squares.length; i++){
-  // add initial colors to squares
-  squares[i].style.background = colors[i];
+function init() {
+  // mode buttons event listeners
+  for (var i = 0; i < modeButtons.length; i++) {
+    modeButtons[i].addEventListener("click", function() {
+      modeButtons[0].classList.remove("selected");
+      modeButtons[1].classList.remove("selected");
+      this.classList.add("selected");
+      // if else verison
+      // if (this.textContent === "Easy") {
+      //   numSquares = 3;
+      // } else {
+      //   numSquares = 6;
+      // }
+      // does the same as ternary operator version, if prefered
+      this.textContent === "Easy" ? numSquares = 3: numSquares = 6;
+      reset();
+    });
+  }
 
-  // add click listeners to squares
-  squares[i].addEventListener("click", function(){
-    // grab full string containing color of clicked square
-    var clickedColorFullString = this.style.background;
-    // housekeeping of full string to extract just a color
-    var clickedColor = clickedColorFullString.slice(0, clickedColorFullString.indexOf(")") + 1);
-    // compare color to pickedColor
-    if(clickedColor === pickedColor) {
-      messageDisplay.textContent = "Correct!";
-      changeColors(clickedColor);
-      h1.style.background = clickedColor;
-    } else {
-      this.style.background = "#232323";
-      messageDisplay.textContent = "Try Again";
-    }
-  });
+  // set up squares
+  for(var i = 0; i < squares.length; i++){
+    // add click listeners to squares
+    squares[i].addEventListener("click", function(){
+      // grab full string containing color of clicked square
+      var clickedColorFullString = this.style.background;
+      // housekeeping of full string to extract just a color
+      var clickedColor = clickedColorFullString.slice(0, clickedColorFullString.indexOf(")") + 1);
+      // compare color to pickedColor
+      if(clickedColor === pickedColor) {
+        messageDisplay.textContent = "Correct!";
+        resetButton.textContent = "Play Again?"
+        changeColors(clickedColor);
+        h1.style.background = clickedColor;
+      } else {
+        this.style.background = "#232323";
+        messageDisplay.textContent = "Try Again";
+      }
+    });
+  }
+
+  reset();
 }
+
+function reset() {
+  colors = generateRandomColors(numSquares);
+  // pick a new random color from array
+  pickedColor = pickColor();
+  // change coloer display to match picked color
+  colorDisplay.textContent = pickedColor;
+  // change colors of squares
+  for (var i = 0; i < squares.length; i++) {
+    if(colors[i]){
+      squares[i].style.display = "block";
+      squares[i].style.background = colors[i];
+    } else {
+      squares[i].style.display = "none";
+    }
+  }
+  h1.style.background = "steelblue";
+  messageDisplay.textContent = "";
+  resetButton.textContent = "New Colors";
+}
+
+resetButton.addEventListener("click", function(){
+  reset();
+});
 
 function changeColors(color){
   // loop through all squares

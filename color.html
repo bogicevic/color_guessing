@@ -6,10 +6,15 @@
     <link rel="stylesheet" href="color.css" media="screen" charset="utf-8">
   </head>
   <body>
-    <h1>RGB Color <span id="colorDisplay"></span> Guessing Game</h1>
-    <div>
-      <span id="message">Go ahead</span>      
-    </div>
+    <h1>The Great<br>
+    <span id="colorDisplay"></span>
+    <br>Color Guessing Game</h1>
+    <div id="stripe">
+      <button type="button" id="reset">New Colors</button>
+      <span id="message"></span>
+      <button type="button" class="mode">Easy</button>
+      <button type="button" class="mode selected">Hard</button>
+    </div><!-- stripe -->
     <div id="container">
       <div class="square"></div>
       <div class="square"></div>
