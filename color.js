@@ -73,9 +73,11 @@ function reset() {
   colorDisplay.textContent = pickedColor;
   // change colors of squares
   for (var i = 0; i < squares.length; i++) {
+    // check how many colors it needs to be reset
     if(colors[i]){
       squares[i].style.display = "block";
       squares[i].style.background = colors[i];
+      // don't display excesive squares
     } else {
       squares[i].style.display = "none";
     }
@@ -87,8 +89,8 @@ function reset() {
 
 function changeColors(color){
   // loop through all squares
-  // change each color to match given color
   for(var i = 0; i < squares.length; i++) {
+    // change each color to match given color
     squares[i].style.background = color;
   }
 }
@@ -117,5 +119,6 @@ function randomColor(){
   var g = Math.floor(Math.random() * 256);
   // generate B from 0 - 255
   var b = Math.floor(Math.random() * 256);
+  // return complete string
   return "rgb(" + r + ", " + g + ", " + b + ")";
 }
